@@ -10,7 +10,7 @@ warnings.filterwarnings('ignore')
 
 def init_browser():
     # @NOTE: Path to my chromedriver
-    executable_path = {"executable_path": "C:\\Users\\charm\\Desktop\chromedriver"}
+    executable_path = {"executable_path": "chromedriver"}
     return Browser("chrome", **executable_path, headless=False)
 
 # Create Mission to Mars global dictionary that can be imported into Mongo
@@ -35,16 +35,17 @@ def scrape_mars_news():
         soup = bs(html, 'html.parser')
 
         # Retrieve the latest element that contains news title and news_paragraph
-        news_title = soup.find('div', class_='content_title').find('a').text
+        news_title = soup.find('div', class_='content_title').text
         news_p = soup.find('div', class_='article_teaser_body').text
 
         # Dictionary entry from MARS NEWS
         mars_info['news_title'] = news_title
         mars_info['news_paragraph'] = news_p
+        browser.quit()  
+        return news_title,news_p
 
-        return mars_info
 
-        browser.quit()
+        
 
 # FEATURED IMAGE
 def scrape_mars_image():
@@ -137,7 +138,7 @@ def scrape_mars_facts():
         #Find Mars Facts DataFrame in the lists of DataFrames
         df = tables[1]
         #Assign the columns
-        df.columns = ['Description', 'Value']
+        df.columns = ['Unnamed', 'Description', 'Value']
         html_table = df.to_html(table_id="html_tbl_css",justify='left',index=False)
 
         # Dictionary entry from Mars Facts
