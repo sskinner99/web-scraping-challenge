@@ -145,7 +145,7 @@ def scrape_mars_facts():
 
         mars_info['tables'] = html_table
 
-        return mars_info
+        return html_table
 
 # Mars Hemisphere
 
@@ -203,4 +203,4 @@ def scrape_mars_hemispheres():
 
         # Return mars_data dictionary 
 
-        return mars_info
+        return hiu
